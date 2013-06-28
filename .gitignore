@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Mascara Telefone com 8 a 9 digitos.</title>
+<script type="text/javascript">
+function mascara(o, f) {
+    v_obj = o;
+    v_fun = f;
+    setTimeout(execmascara, 1);
+}
+ 
+function execmascara() {
+    v_obj.value = v_fun(v_obj.value)
+}
+ 
+function mtel(v) {
+    v=v.replace(/\D/g,"");
+    v=v.replace(/^(\d{2})(\d)/g,"($1) $2");
+    v=v.replace(/(\d)(\d{4})$/,"$1-$2");
+    return v;
+}
+ 
+function id(el) {
+  return document.getElementById(el);
+}
+ 
+window.onload = function() {
+  var $telefone = id('telefone');
+	$telefone.onkeyup = function() {
+		mascara( this, mtel );
+	}
+	$telefone.onblur = function() {
+		var v = this.value;
+		if( v.indexOf('(11)') !== -1 && v.length === 14) {
+			this.value = v.replace(/\((\d{2})\) (\d{4})-(\d{4})/g,'($1) 9$2-$3');
+		}
+	}
+}
+
+</script>
+</head>
+
+<body>
+	<input type="text" name="telefone" id="telefone" maxlength="15" />
+</body>
+</html>
